@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>心理測驗量表</title>
+  <title>人格測驗量表 - 機智青年生活 - GOODTV+ 好消息電視台</title>
   <style>
     body {
       font-family: Arial, "Microsoft JhengHei", sans-serif;
@@ -47,10 +47,33 @@
       padding: 10px 20px;
       font-size: 16px;
     }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    footer, footer a {
+      display: block;
+      font-size: 14px;
+      color: #777;
+      margin: 32px 0;
+    }
   </style>
 </head>
 
 <body>
+
+  <header>
+    <a href="https://www.goodtv.tv/search/program/7015">
+      <img src="../goodtv_smart_youth_logo.png" alt="機智青年生活 Logo" style="max-width: 150px;"/>
+    </a>
+    <a href="https://www.goodtv.tv/">
+      <img src="../goodtv_plus_logo.png" alt="GOOD TV 好消息電視台 Logo" style="max-width: 168px;"/>
+    </a>
+  </header>
 
   <!-- 標題 -->
   <h1>人格測驗量表</h1>
@@ -82,6 +105,10 @@
     <h2>測驗結果</h2>
     <p id="resultText">這裡會顯示你的結果與解說。</p>
   </div>
+
+  <footer>
+    歡迎至 GOODear。有任何問題可到這裡詢問，有專業諮商師爲您進一步說明。<a href="https://goodear.org.tw/" target="_blank">https://goodear.org.tw/</a>
+  </footer>
 
   <script>
     function createQuestion({ index, question, options }) {
