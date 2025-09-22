@@ -230,9 +230,8 @@
 
     function onClick() {
       const msg = checkAnswerIssues();
-      if (msg) {
-        showMessage(msg);
-      } else {
+      showMessage(msg);
+      if (!msg) {
         showResult();
       }
     }
