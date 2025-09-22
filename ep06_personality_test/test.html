@@ -38,6 +38,10 @@
       margin: 16px 0;
     }
 
+    .no-select {
+      user-select: none;
+    }
+
     .result {
       margin-top: 30px;
       padding: 16px;
@@ -86,10 +90,10 @@
   </header>
 
   <!-- 標題 -->
-  <h1>人格測驗量表</h1>
+  <h1 class="no-select">人格測驗量表</h1>
 
   <!-- 作者資訊 -->
-  <div class="author">
+  <div class="author no-select">
     <p>
       量表出處：Eysenck & Wilson(1976)<br/>
       洪英正編製
@@ -97,13 +101,13 @@
   </div>
 
   <!-- 說明文字 -->
-  <div class="description">
+  <div class="description no-select">
     <!-- <p>以下是一份簡短的心理測驗，請依照你的直覺選擇最符合的答案。完成後點擊送出，即可查看你的測驗結果與解說。</p> -->
     <p>同意或傾向同意給 O，不同意或傾向不同意給 X。</p>
   </div>
 
   <!-- 題目區 -->
-  <form id="quizForm">
+  <form id="quizForm" class="no-select">
     <section id="questions"></section>
     <div id="message" class="error-message"></div>
 
