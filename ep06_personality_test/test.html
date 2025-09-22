@@ -33,6 +33,11 @@
       margin-bottom: 15px;
     }
 
+    .error-message {
+      color: red;
+      margin: 16px 0;
+    }
+
     .result {
       margin-top: 30px;
       padding: 16px;
@@ -95,9 +100,10 @@
   <!-- 題目區 -->
   <form id="quizForm">
     <section id="questions"></section>
+    <div id="message" class="error-message"></div>
 
     <!-- 送出按鈕 -->
-    <button type="button" onclick="showResult()">送出</button>
+    <button type="button" onclick="onClick()">送出</button>
   </form>
 
   <!-- 測量結果與解說 -->
@@ -111,28 +117,7 @@
   </footer>
 
   <script>
-    function createQuestion({ index, question, options }) {
-      const questionDiv = document.createElement("div");
-      questionDiv.className = "question";
-      questionDiv.innerHTML = `<p>${index}. ${question}</p>`;
-      for (const option of options) {
-        questionDiv.innerHTML += `<label><input type="radio" name="${index}" value="${option.value}"> ${option.label}</label><br>`;
-      }
-      return questionDiv;
-    }
-
-    function createQuestionSet(qSet) {
-      const questionsContainer = document.getElementById("questions");
-
-      qSet.questions.forEach(q => {
-        const questionElement = createQuestion({ ...q, options: q.options ?? qSet.defaultOptions });
-        questionsContainer.appendChild(questionElement);
-      });
-    }
-
-    function showQuestionSet() {
-      createQuestionSet();
-    }
+    // quiz content
 
     const quiz = {
       questions: [
@@ -156,6 +141,46 @@
     };
 
     createQuestionSet(quiz);
+
+    // UI render methods
+
+    function createQuestion({ index, question, options }) {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question";
+      questionDiv.innerHTML = `<p>${index}. ${question}</p>`;
+      for (const option of options) {
+        questionDiv.innerHTML += `<label><input type="radio" name="${index}" value="${option.value}"> ${option.label}</label><br>`;
+      }
+      return questionDiv;
+    }
+
+    function createQuestionSet(qSet) {
+      const questionsContainer = document.getElementById("questions");
+
+      qSet.questions.forEach(q => {
+        const questionElement = createQuestion({ ...q, options: q.options ?? qSet.defaultOptions });
+        questionsContainer.appendChild(questionElement);
+      });
+    }
+
+    function showQuestionSet() {
+      createQuestionSet();
+    }
+
+    function showMessage(message) {
+      const msgContainer = document.getElementById('message');
+      msgContainer.textContent = message;
+    }
+
+    // quiz logics
+
+    function checkAnswerIssues() {
+      const form = document.getElementById("quizForm");
+      const formData = new FormData(form);
+      if (Array.from(formData.values()).length < quiz.questions.length) {
+        return '尚有題目未作答';
+      }
+    }
 
     function showResult() {
       // 簡單範例: 直接顯示結果
@@ -193,6 +218,17 @@
         'x+y-': { label: '熱情性格', quadrant: '第四象限', description: '外向、情緒穩定，活潑、積極、喜歡社交。' },
       };
       return resultsMap[axisXText + axisYText];
+    }
+
+    // UI handlers
+
+    function onClick() {
+      const msg = checkAnswerIssues();
+      if (msg) {
+        showMessage(msg);
+      } else {
+        showResult();
+      }
     }
   </script>
 </body>
