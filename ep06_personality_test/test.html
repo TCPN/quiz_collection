@@ -110,7 +110,7 @@
 
   <!-- 題目區 -->
   <form id="quizForm" class="no-select">
-    <section id="questions"></section>
+    <ol id="questions"></ol>
     <div id="message" class="error-message"></div>
 
     <!-- 送出按鈕 -->
@@ -157,13 +157,14 @@
     // UI render methods
 
     function createQuestion({ index, question, options }) {
-      const questionDiv = document.createElement("div");
-      questionDiv.className = "question";
-      questionDiv.innerHTML = `<p>${index}. ${question}</p>`;
+      const questionEl = document.createElement("li");
+      questionEl.className = "question";
+      questionEl.innerHTML = `<div>${question}</div>`;
+      questionEl.value = index;
       for (const option of options) {
-        questionDiv.innerHTML += `<label><input type="radio" name="${index}" value="${option.value}"> ${option.label}</label><br>`;
+        questionEl.innerHTML += `<label><input type="radio" name="${index}" value="${option.value}"> ${option.label}</label><br>`;
       }
-      return questionDiv;
+      return questionEl;
     }
 
     function createQuestionSet(qSet) {
