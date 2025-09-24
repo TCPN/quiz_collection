@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5, user-scalable=yes">
+  <title>人格測驗量表 - 機智青年生活 - GOODTV+ 好消息電視台</title>
+  <link rel="stylesheet" href="../common/style.css" />
+  
+  <script lang="javascript" src="../common/loadComponent.js"></script>
+  <script lang="javascript" src="../common/showQuestions.js"></script>
+  <script lang="javascript" src="../common/checkAnswers.js"></script>
+  <script lang="javascript" src="../common/uiHandlers.js"></script>
+  <script>
+    // quiz content
+
+    const quiz = {
+      questions: [
+        { target: 'axisY', index: 1, question: "你會沒有明顯的理由而有時覺得快樂，有時又覺得沮喪嗎？" },
+        { target: 'axisY', index: 2, question: "不管有沒有明顯的原因，你的心境經常起伏不定嗎？" },
+        { target: 'axisY', index: 3, question: "你有喜怒無常的傾向嗎？" },
+        { target: 'axisY', index: 4, question: "在你想集中注意力時，常神不守舍嗎？" },
+        { target: 'axisY', index: 5, question: "即使在你必須與人交談時，你也常「失常」嗎？" },
+        { target: 'axisY', index: 6, question: "你會時而充滿活力，時而又了無生氣嗎？" },
+        { target: 'axisX', index: 7, question: "你較喜歡行動，而不喜策劃行動嗎？" },
+        { target: 'axisX', index: 8, question: "當你參與需要快速行動的工作時，是否最感快樂？" },
+        { target: 'axisX', index: 9, question: "你通常會主動去結交新朋友嗎？" },
+        { target: 'axisX', index: 10, question: "你有要求自己行動迅速、確實的傾向嗎？" },
+        { target: 'axisX', index: 11, question: "自認為是個活潑的嗎？" },
+        { target: 'axisX', index: 12, question: "如果你被禁止從事很多社交接觸，是否會覺得很不快樂？" },
+      ],
+      defaultOptions: [
+        { label: "O", value: "o", score: 1 },
+        { label: "X", value: "x", score: -1 },
+      ],
+    };
+
+    // quiz logics
+
+    function getScores() {
+      const form = document.getElementById("quizForm");
+      const formData = new FormData(form);
+      let scores = { axisX: 0, axisY: 0 };
+      for (let [key, value] of formData.entries()) {
+        const target = quiz.questions[key - 1].target;
+        const score = quiz.defaultOptions.find(opt => opt.value === value).score;
+        scores[target] += score;
+      }
+      return scores;
+    }
+
+    function getResults(scores) {
+      const axisXText = scores.axisX > 0 ? 'x+' : 'x-'; // 外向性
+      const axisYText = scores.axisY > 0 ? 'y+' : 'y-'; // 情緒不穩定性
+      const resultsMap = {
+        'x+y+': { label: '暴躁性格', quadrant: '第一象限', description: '外向、情緒不穩定，容易焦慮與急躁。' },
+        'x-y+': { label: '憂鬱性格', quadrant: '第二象限', description: '內向、情緒不穩定，容易憂慮與悲觀。' },
+        'x-y-': { label: '冷漠性格', quadrant: '第三象限', description: '內向、情緒穩定，冷靜、不易受干擾。' },
+        'x+y-': { label: '熱情性格', quadrant: '第四象限', description: '外向、情緒穩定，活潑、積極、喜歡社交。' },
+      };
+      return resultsMap[axisXText + axisYText];
+    }
+
+    function showResult() {
+      const scores = getScores();
+      const results = getResults(scores);
+      document.getElementById("result").style.display = "block";
+      document.getElementById("resultText").innerHTML =
+        `<h4>你的性格傾向: <b>${results.label}</b></h4>\n` +
+        `<p>${results.description}</p>\n` +
+        `<p>` +
+        `外向性 (Extraversion): ${(scores.axisX + 6) / 2} / 6 分<br/>` +
+        `情緒穩定性 (Emotional Stability): ${6 - (scores.axisY + 6) / 2} / 6 分` +
+        `</p>`;
+    }
+    </script>
+<body>
+
+  <header></header>
+
+  <!-- 標題 -->
+  <h1 class="no-select">人格測驗量表</h1>
+
+  <!-- 作者資訊 -->
+  <div class="author no-select">
+    <p>
+      量表出處：Eysenck & Wilson (1976)<br/>
+      洪英正編製
+    </p>
+  </div>
+
+  <!-- 說明文字 -->
+  <div class="description no-select">
+    <p>同意或傾向同意給 O，不同意或傾向不同意給 X。</p>
+  </div>
+
+  <!-- 題目區 -->
+  <form id="quizForm" class="no-select">
+    <ol id="questions"></ol>
+    <div id="message" class="error-message"></div>
+
+    <!-- 送出按鈕 -->
+    <button type="button" onclick="onClick()">送出</button>
+  </form>
+
+  <!-- 測量結果與解說 -->
+  <div id="result" class="result">
+    <h2>測驗結果</h2>
+    <p id="resultText">這裡會顯示你的結果與解說。</p>
+  </div>
+
+  <footer></footer>
+
+  <script lang="javascript">
+    loadComponent(document.querySelector('header'), '../components/header.html');
+    loadComponent(document.querySelector('footer'), '../components/footer.html');
+    showQuestions(quiz);
+  </script>
+</body>
+
+</html>
