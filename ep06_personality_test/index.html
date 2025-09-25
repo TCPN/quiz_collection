@@ -6,12 +6,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5, user-scalable=yes">
   <title>人格測驗量表 - 機智青年生活 - GOODTV+ 好消息電視台</title>
   <link rel="stylesheet" href="../common/style.css" />
+  <style>
+    #chart {
+      margin-top: 20px;
+      user-select: none;
+    }
+  </style>
   
   <script lang="javascript" src="../common/loadComponent.js"></script>
   <script lang="javascript" src="../common/showQuestions.js"></script>
   <script lang="javascript" src="../common/checkAnswers.js"></script>
   <script lang="javascript" src="../common/uiHandlers.js"></script>
   <script lang="javascript" src="../common/dev.js"></script>
+
+  <script lang="javascript" src="./drawPlane.js"></script>
   <script>
     // quiz content
 
@@ -75,6 +83,11 @@
         `外向性 (Extraversion)：${scoreString(scores.axisX)}<br/>` +
         `情緒穩定性 (Emotional Instability)：${scoreString(scores.axisY)}` +
         `</p>`;
+      drawPlane(
+        document.getElementById("chart"),
+        [{ x: scores.axisX, y: scores.axisY, fill: '#f00' }],
+        innerWidth < 600 ? { width: 500, height: 500, showGrid: false } : {},
+      );
     }
     </script>
 <body>
@@ -110,6 +123,7 @@
   <div id="result" class="result">
     <h2>測驗結果</h2>
     <p id="resultText">這裡會顯示你的結果與解說。</p>
+    <div id="chart"></div>
   </div>
 
   <footer></footer>
