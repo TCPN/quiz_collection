@@ -54,10 +54,10 @@
       const axisXText = scores.axisX > 0 ? 'x+' : 'x-'; // 外向性
       const axisYText = scores.axisY > 0 ? 'y+' : 'y-'; // 情緒不穩定性
       const resultsMap = {
-        'x+y+': { label: '暴躁性格', quadrant: '第一象限', description: '外向、情緒不穩定，容易焦慮與急躁。' },
-        'x-y+': { label: '憂鬱性格', quadrant: '第二象限', description: '內向、情緒不穩定，容易憂慮與悲觀。' },
-        'x-y-': { label: '冷漠性格', quadrant: '第三象限', description: '內向、情緒穩定，冷靜、不易受干擾。' },
-        'x+y-': { label: '熱情性格', quadrant: '第四象限', description: '外向、情緒穩定，活潑、積極、喜歡社交。' },
+        'x+y+': { label: '暴躁性格', quadrant: '第一象限', description: '外向、情緒不穩定，容易焦慮與急躁。', animal: '公牛' },
+        'x-y+': { label: '憂鬱性格', quadrant: '第二象限', description: '內向、情緒不穩定，容易憂慮與悲觀。', animal: '貓' },
+        'x-y-': { label: '冷漠性格', quadrant: '第三象限', description: '內向、情緒穩定，冷靜、不易受干擾。', animal: '烏龜' },
+        'x+y-': { label: '熱情性格', quadrant: '第四象限', description: '外向、情緒穩定，活潑、積極、喜歡社交。', animal: '猴子' },
       };
       return resultsMap[axisXText + axisYText];
     }
@@ -65,13 +65,15 @@
     function showResult() {
       const scores = getScores();
       const results = getResults(scores);
+      const scoreString = (v) => (v >= 0 ? '+' + v : '' + v);
       document.getElementById("result").style.display = "block";
       document.getElementById("resultText").innerHTML =
-        `<h4>你的性格傾向: <b>${results.label}</b></h4>\n` +
-        `<p>${results.description}</p>\n` +
+        `<h4>你的性格傾向：<b>${results.label}</b></h4>\n` +
+        `<p>${results.description}<br>\n` +
+        `代表動物：${results.animal}</p>\n` +
         `<p>` +
-        `外向性 (Extraversion): ${(scores.axisX + 6) / 2} / 6 分<br/>` +
-        `情緒穩定性 (Emotional Stability): ${6 - (scores.axisY + 6) / 2} / 6 分` +
+        `外向性 (Extraversion)：${scoreString(scores.axisX)}<br/>` +
+        `情緒穩定性 (Emotional Instability)：${scoreString(scores.axisY)}` +
         `</p>`;
     }
     </script>
