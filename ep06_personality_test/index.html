@@ -80,8 +80,8 @@
         `<p>${results.description}<br>\n` +
         `代表動物：${results.animal}</p>\n` +
         `<p>` +
-        `外向性 (Extraversion)：${scoreString(scores.axisX)}<br/>` +
-        `情緒穩定性 (Emotional Instability)：${scoreString(scores.axisY)}` +
+        `內外向性 (Introversion and Extroversion)：${scoreString(scores.axisX)} (分數越高，越外向)<br/>` +
+        `情緒穩定性 (Emotional Stability)：${scoreString(scores.axisY)} (分數越高，越不穩定)` +
         `</p>`;
       drawPlane(
         document.getElementById("chart"),
