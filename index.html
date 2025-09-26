@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5, user-scalable=yes">
+  <title>人格測驗量表 - 機智青年生活 - GOODTV+ 好消息電視台</title>
+  <link rel="stylesheet" href="./common/style.css" />
+  <style>
+    .quiz {
+      display: block;
+      margin: 16px;
+      padding: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      color: #000;
+      text-decoration: none;
+    }
+    .quiz:hover {
+      background-color: #f9f9f9;
+    }
+    .quiz-desc {
+      color: #999;
+      font-size: 0.7em;
+    }
+  </style>
+
+  <script lang="javascript" src="./common/loadComponent.js"></script>
+
+  <script lang="javascript">
+    const quizs = [
+        {
+            name: '自我強度量表',
+            link: './ep01_self_strength/',
+            episode: { key: 'EP01', title: '中了話語的毒箭' },
+        },
+        {
+            name: 'Eysenck & Wilson 之人格測驗量表',
+            link: './ep06_personality_test/',
+            episode: { key: 'EP06', title: '我是內向人如何打開話匣子' },
+        },
+    ];
+    function showLinks() {
+        const linksDiv = document.getElementById('links');
+        quizs.forEach(quiz => {
+            const el = document.createElement('a');
+            el.href = quiz.link;
+            el.innerHTML = [
+              `<div class="quiz-title">${quiz.name}</div>`,
+              `<div class="quiz-desc">${quiz.episode.key}{quiz.episode.title}</div>`,
+            ].join('');
+            el.classList.add('quiz');
+            linksDiv.appendChild(el);
+        });
+    }
+  </script>
+<body>
+
+  <header></header>
+
+  <!-- 標題 -->
+  <h1 class="no-select">心理測驗量表</h1>
+
+  <!-- 測驗連結 -->
+  <div id="links">
+  </div>
+
+  <footer></footer>
+
+  <script lang="javascript">
+    loadComponent(document.querySelector('header'), '../components/header.html');
+    loadComponent(document.querySelector('footer'), '../components/footer.html');
+    showLinks();
+  </script>
+</body>
+
+</html>
