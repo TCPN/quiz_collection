@@ -65,7 +65,7 @@
       const result = getResult(score);
       container.getElementById("result").style.display = "block";
       container.getElementById("resultText").innerHTML = 
-        `分數：${score}<br>` +
+        `分數：${score.toFixed(1)}<br>` +
         `顯示<b>${result}</b>`;
     }
   </script>
