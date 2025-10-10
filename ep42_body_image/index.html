@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5, user-scalable=yes">
+  <title>身體意象評價量表 - 機智青年生活 - GOODTV+ 好消息電視台</title>
+  <link rel="stylesheet" href="../common/style.css" />
+  
+  <script lang="javascript" src="../common/loadComponent.js"></script>
+  <script lang="javascript" src="../common/showQuestions.js"></script>
+  <script lang="javascript" src="../common/checkAnswers.js"></script>
+  <script lang="javascript" src="../common/uiHandlers.js"></script>
+  <script lang="javascript" src="../common/dev.js"></script>
+  <script>
+    // quiz content
+    const positive = { a: 1, b: 2, c: 3, d: 4, e: 5 };
+    const negative = { a: 5, b: 4, c: 3, d: 2, e: 1 };
+
+    const quiz = {
+      questions: [
+  { scores: positive, index: 1, question: "我覺得我的身材很性感。" },
+  { scores: positive, index: 2, question: "我喜歡自己這個樣子的長相。" },
+  { scores: positive, index: 3, question: "我覺得大多數人都認為我長得很美、很帥。" },
+  { scores: positive, index: 4, question: "我喜歡自己沒穿衣服時的樣子。" },
+  { scores: positive, index: 5, question: "我喜歡穿合身的衣服。" },
+  { scores: negative, index: 6, question: "我不喜歡自己的身材。" },
+  { scores: negative, index: 7, question: "我覺得我的身材不吸引人。" }
+],
+      defaultOptions: [
+        { label: "非常不同意", value: "a" },
+        { label: "不同意", value: "b" },
+        { label: "中立意見", value: "c" },
+        { label: "同意", value: "d" },
+        { label: "非常同意", value: "e" }
+      ],
+    };
+
+    // quiz logics
+
+    function getScores() {
+      const form = document.getElementById("quizForm");
+      const formData = new FormData(form);
+      let score = 0;
+      for (let [key, value] of formData.entries()) {
+        score += (quiz.questions[key - 1].scores[value] ?? 0);
+      }
+      return score / quiz.questions.length;
+    }
+
+    function getResult(score) {
+      if (score < 3.1) {
+        return '身體意象較負面，對自己外表較不滿意';
+      }
+      if (score >= 3.1 && score <= 3.9) {
+        return '身體意象中等，對自己外表尚可';
+      }
+      if (score >= 4) {
+        return '身體意象較佳，對自己外表滿意';
+      }
+    }
+
+    function showResult(container = document) {
+      const score = getScores();
+      const result = getResult(score);
+      container.getElementById("result").style.display = "block";
+      container.getElementById("resultText").innerHTML = 
+        `分數：${score}<br>` +
+        `顯示<b>${result}</b>`;
+    }
+  </script>
+</head>
+
+<body>
+
+  <header></header>
+
+  <!-- 標題 -->
+  <h1 class="no-select">身體意象評價量表</h1>
+
+  <!-- 作者資訊 -->
+  <div class="author no-select">
+    <p>
+      洪英正 (2024) 編製
+    </p>
+  </div>
+
+  <!-- 說明文字 -->
+  <div class="description no-select">
+    <p>※ 答題說明：以下題目是想了解您對自己身體外表的滿意程度，請依您實際的感受填答。</p>
+  </div>
+
+  <!-- 題目區 -->
+  <form id="quizForm" class="no-select">
+    <ol id="questions"></ol>
+    <div id="message" class="error-message"></div>
+
+    <!-- 送出按鈕 -->
+    <button type="button" onclick="onClick()">送出</button>
+  </form>
+
+  <!-- 測量結果與解說 -->
+  <div id="result" class="result">
+    <h2>測驗結果</h2>
+    <p id="resultText">這裡會顯示你的結果與解說。</p>
+  </div>
+
+  <footer></footer>
+
+  <script lang="javascript">
+    loadComponent(document.querySelector('header'), '../components/header.html');
+    loadComponent(document.querySelector('footer'), '../components/footer.html');
+    showQuestions(quiz);
+  </script>
+</body>
+
+</html>
