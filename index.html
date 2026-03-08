@@ -48,7 +48,7 @@
             el.href = quiz.link;
             el.innerHTML = [
               `<div class="quiz-title">${quiz.name}</div>`,
-              `<div class="quiz-desc">${quiz.episode.key}{quiz.episode.title}</div>`,
+              `<div class="quiz-desc">${quiz.episode.key} - ${quiz.episode.title}</div>`,
             ].join('');
             el.classList.add('quiz');
             linksDiv.appendChild(el);
