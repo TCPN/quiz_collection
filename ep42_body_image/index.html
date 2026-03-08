@@ -11,6 +11,7 @@
   <script lang="javascript" src="../common/showQuestions.js"></script>
   <script lang="javascript" src="../common/checkAnswers.js"></script>
   <script lang="javascript" src="../common/uiHandlers.js"></script>
+  <script lang="javascript" src="../common/answerRestore.js"></script>
   <script lang="javascript" src="../common/dev.js"></script>
   <script>
     // quiz content
@@ -111,6 +112,7 @@
     loadComponent(document.querySelector('header'), '../components/header.html');
     loadComponent(document.querySelector('footer'), '../components/footer.html');
     showQuestions(quiz);
+    useAnswerRestore(document.querySelector('#quizForm'));
   </script>
 </body>
 
