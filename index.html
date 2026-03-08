@@ -24,6 +24,9 @@
       color: #999;
       font-size: 0.7em;
     }
+    .quiz-episode-label:after {
+      content: " - "
+    }
   </style>
 
   <script lang="javascript" src="./common/loadComponent.js"></script>
@@ -48,7 +51,11 @@
             el.href = quiz.link;
             el.innerHTML = [
               `<div class="quiz-title">${quiz.name}</div>`,
-              `<div class="quiz-desc">${quiz.episode.key} - ${quiz.episode.title}</div>`,
+              `<div class="quiz-desc">
+                <span class="quiz-episode-label">${quiz.episode.key}</span>
+                ${quiz.episode.title}
+                </div>
+              `,
             ].join('');
             el.classList.add('quiz');
             linksDiv.appendChild(el);
