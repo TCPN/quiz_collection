@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=5, user-scalable=yes">
+  <title>果斷量表自我評估 - 機智青年生活 - GOODTV+ 好消息電視台</title>
+  <link rel="stylesheet" href="../common/style.css" />
+
+  <script lang="javascript" src="../common/loadComponent.js"></script>
+  <script lang="javascript" src="../common/showQuestions.js"></script>
+  <script lang="javascript" src="../common/checkAnswers.js"></script>
+  <script lang="javascript" src="../common/uiHandlers.js"></script>
+  <script lang="javascript" src="../common/answerRestore.js"></script>
+  <script lang="javascript" src="../common/dev.js"></script>
+  <script>
+    // quiz content
+    const YES = { yes: 1, no: 0 };
+    const NO_ = { yes: 0, no: 1 };
+    const quiz = {
+      questions: [
+        { scores: NO_, index: 1, question: "對我來說當推銷員是個好人時去拒絕他是非常困難的。" },
+        { scores: YES, index: 2, question: "我可以自由的表達言論。" },
+        { scores: YES, index: 3, question: "如果有人處事非常不公平，我會提醒那個人要注意。" },
+        { scores: NO_, index: 4, question: "工作是沒有讓你表達感覺的地方。" },
+        { scores: NO_, index: 5, question: "要求寵愛是沒用的，人們依工作表現來得到他們應得的。" },
+        { scores: YES, index: 6, question: "商業不是展示老練、圓滑的地方，我說我想說的。" },
+        { scores: NO_, index: 7, question: "如果一個人他或她看起來似乎很匆忙，我會在超級市場中讓這個人走在我前面。" },
+        { scores: NO_, index: 8, question: "我的缺點是：我是個大好人。" },
+        { scores: YES, index: 9, question: "如過我的餐廳帳單超過 1000 元，我會要求自己不再犯這類的錯誤。" },
+        { scores: YES, index: 10, question: "我曾不止一次的在公共場合中大聲狂笑。" },
+        { scores: YES, index: 11, question: "我曾被一些人說我過於直言不諱。" },
+        { scores: YES, index: 12, question: "即使是一點點的瑕疵，我從不花心思去退貨。" },
+        { scores: NO_, index: 13, question: "我害怕對同僚表達我的不滿。" },
+        { scores: NO_, index: 14, question: "人們常說我被控制的太過緘默及情緒化。" },
+        { scores: YES, index: 15, question: "優秀的男職員和女職員總是最晚完成工作。" },
+        { scores: YES, index: 16, question: "我會在小事上爭取我自己的權力。" },
+        { scores: YES, index: 17, question: "如果我對考試測驗報告上的成績不滿意，我一定會向教師表達我的不滿。" },
+        { scores: NO_, index: 18, question: "如果我和某人有爭執，我會試著避見他或她。" },
+        { scores: YES, index: 19, question: "我會堅持我的配偶（或室友或伙伴）應該分擔人和人間討厭的瑣碎事。" },
+        { scores: NO_, index: 20, question: "當我和別人在爭執時，直視另一個人對我來說是困難的事。" },
+        { scores: YES, index: 21, question: "我曾不止一次在朋友面前哭泣。" },
+        { scores: YES, index: 22, question: "看電影時在我旁邊的人一直和另一個人說話，我會要求他或她停止說話。" },
+        { scores: YES, index: 23, question: "我不會特別在乎拒絕別人社交活動的邀請。" },
+        { scores: NO_, index: 24, question: "表達你對另一個人的真正感覺是很愚蠢的。" },
+        { scores: YES, index: 25, question: "有時候我會藉由咒罵或輕蔑另一個人來表達我的憤怒。" },
+        { scores: NO_, index: 26, question: "我討厭在會議中大聲說話。" },
+        { scores: YES, index: 27, question: "我發現向朋友要求小幫忙就好像當車子進廠時修理前順道載我去上班一樣的容易。" },
+        { scores: YES, index: 28, question: "如果有個人在餐廳裡說話非常大聲而且打擾到我，我會告訴那個人。" },
+        { scores: YES, index: 29, question: "我常幫別人說完他們沒說完的話。" },
+        { scores: YES, index: 30, question: "向另一個人表達愛情和感情，對我來說是件容易的事。" },
+      ],
+      defaultOptions: [
+        { label: "大部分正確", value: "yes" },
+        { label: "大部分錯誤", value: "no" },
+      ],
+    };
+
+    // quiz logics
+
+    function getScores() {
+      const form = document.getElementById("quizForm");
+      const formData = new FormData(form);
+      let score = 0;
+      for (let [key, value] of formData.entries()) {
+        score += (quiz.questions[key - 1].scores[value] ?? 0);
+      }
+      return score;
+    }
+
+    function getResult(score) {
+      if (score <= 12) {
+        return '比較不果斷';
+      }
+      if (score >= 13 && score <= 17) {
+        return '普通、看情況決定事情';
+      }
+      if (score >= 18) {
+        return '比較果斷';
+      }
+    }
+
+    function showResult(container = document) {
+      const score = getScores();
+      const result = getResult(score);
+      container.getElementById("result").style.display = "block";
+      container.getElementById("resultText").innerHTML =
+        `分數：${score.toFixed(0)}<br>` +
+        `你的自我果斷程度為<b>${result}</b>`;
+    }
+  </script>
+</head>
+
+<body>
+
+  <header></header>
+
+  <!-- 標題 -->
+  <h1 class="no-select">果斷量表自我評估</h1>
+
+  <!-- 作者資訊 -->
+  <div class="author no-select">
+    <p>
+      量表出處:Dubrine(2003)<br>
+      洪英正編製
+    </p>
+  </div>
+
+  <!-- 說明文字 -->
+  <div class="description no-select">
+    <p>以你本身來藉由大部分正確或大部分錯誤回答每一個問題。</p>
+  </div>
+
+  <!-- 題目區 -->
+  <form id="quizForm" class="no-select">
+    <ol id="questions"></ol>
+    <div id="message" class="error-message"></div>
+
+    <!-- 送出按鈕 -->
+    <button type="button" onclick="onClick()">送出</button>
+  </form>
+
+  <!-- 測量結果與解說 -->
+  <div id="result" class="result">
+    <h2>測驗結果</h2>
+    <p id="resultText">這裡會顯示你的結果與解說。</p>
+  </div>
+
+  <footer></footer>
+
+  <script lang="javascript">
+    loadComponent(document.querySelector('header'), '../components/header.html');
+    loadComponent(document.querySelector('footer'), '../components/footer.html');
+    showQuestions(quiz);
+    useAnswerRestore(document.querySelector('#quizForm'));
+  </script>
+</body>
+
+</html>
