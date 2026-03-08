@@ -4,5 +4,10 @@ function onClick() {
   showMessage(issue);
   if (!issue) {
     showResult();
+    onShowResult();
   }
+}
+
+function onShowResult() {
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
 }
